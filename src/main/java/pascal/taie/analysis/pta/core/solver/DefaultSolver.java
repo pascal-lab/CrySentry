@@ -170,10 +170,6 @@ public class DefaultSolver implements Solver {
         propTypes = new PropagateTypes(
                 (List<String>) options.get("propagate-types"),
                 typeSystem);
-        for(String str:(List<String>)options.get("propagate-types")){
-            logger.info("--------------------------------------------" + str);
-        }
-        logger.info("--------------------------------------------" + propTypes);
         onlyApp = options.getBoolean("only-app");
         timeLimit = options.getInt("time-limit");
     }

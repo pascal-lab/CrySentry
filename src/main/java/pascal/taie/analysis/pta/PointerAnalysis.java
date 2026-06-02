@@ -82,6 +82,33 @@ public class PointerAnalysis extends ProgramAnalysis<PointerAnalysisResult> {
             if (advanced.equals("collection")) {
                 selector = ContextSelectorFactory.makeSelectiveSelector(cs,
                         new CollectionMethods(World.get().getClassHierarchy()).get());
+                if (advanced != null) {
+                    if (advanced.equals("collection")) {
+                        selector = ContextSelectorFactory.makeSelectiveSelector(cs,
+                                new CollectionMethods(World.get().getClassHierarchy()).get());
+                    } else if (advanced.equals("hashmap")) {
+                        selector = new ContextSelectorDecorator(ContextSelectorFactory.makePlainSelector(cs));
+                    } else {
+                        // run context-insensitive analysis as pre-analysis
+                        PointerAnalysisResult preResult = runAnalysis(heapModel,
+                                ContextSelectorFactory.makeCISelector());
+                        if (advanced.startsWith("scaler")) {
+                            selector = Timer.runAndCount(() -> ContextSelectorFactory
+                                            .makeGuidedSelector(Scaler.run(preResult, advanced)),
+                                    "Scaler", Level.INFO);
+                        } else if (advanced.startsWith("zipper")) {
+                            selector = Timer.runAndCount(() -> ContextSelectorFactory
+                                            .makeSelectiveSelector(cs, Zipper.run(preResult, advanced)),
+                                    "Zipper", Level.INFO);
+                        } else if (advanced.equals("mahjong")) {
+                            heapModel = Timer.runAndCount(() -> Mahjong.run(preResult, options),
+                                    "Mahjong", Level.INFO);
+                        } else {
+                            throw new IllegalArgumentException(
+                                    "Illegal advanced analysis argument: " + advanced);
+                        }
+                    }
+                }
             } else if (advanced.equals("hashmap")) {
                 selector = new ContextSelectorDecorator(ContextSelectorFactory.makePlainSelector(cs));
             } else {

@@ -65,7 +65,6 @@ forbiddenMethodRules:
 cryptoObjPropagate:
   - { method: "<java.lang.String: java.lang.String concat(java.lang.String)>", from: base, to: result, type: "java.lang.String" }
   - { method: "<java.lang.String: java.lang.String concat(java.lang.String)>", from: 0, to: result, type: "java.lang.String" }
-  #  - { method: "<java.util.Properties: java.lang.String getProperty(java.lang.String,java.lang.String)>", from: 1, to: result, type: "java.lang.String" }
   - { method: "<java.lang.String: char[] toCharArray()>", from: base, to: result, type: "char[]" }
   - { method: "<java.lang.String: void <init>(char[])>", from: 0, to: base, type: "java.lang.String" }
   - { method: "<java.lang.String: java.lang.String valueOf(char[])>", from: 0, to: result, type: "java.lang.String" }
@@ -105,17 +104,3 @@ compositeRules:
       toSources:
         - { method: "<java.security.KeyPairGenerator: java.security.KeyPairGenerator getInstance(java.lang.String)>", index: result, ruleType: "PatternMatch", ruleIndex: 0, pattern: "ECC" }
         - { method: "<java.security.KeyPairGenerator: void initialize(int)>", index: base, ruleType: "NumberSize", ruleIndex: 0, min: 224, max: 10000 }
-#  - compositeRule:
-#      fromSource:
-#        method: "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>"
-#        index: result
-#        type: "java.security.MessageDigest"
-#      toSources:
-#        - { method: "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>", index: result, ruleType: "PatternMatch", ruleIndex: 0, pattern: "SHA512" }
-#        - { method: "<java.io.Writer: void write(java.lang.String)>", index: 0, ruleType: "PredictableSource", ruleIndex: 0 }
-#      propagates:
-#        - { method: "<java.security.MessageDigest: byte[] digest()>", from: base, to: result, type: "byte[]" }
-#        - { method: "<org.owasp.esapi.reference.DefaultEncoder: java.lang.String encodeForBase64(byte[],boolean)>", from: 0, to: result, type: "java.lang.String" }
-#        - { method: "<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>", from: 0, to: result, type: "java.lang.StringBuilder" }
-#        - { method: "<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>", from: base, to: result, type: "java.lang.StringBuilder" }
-#        - { method: "<java.lang.StringBuilder: java.lang.String toString()>", from: base, to: result, type: "java.lang.String" }

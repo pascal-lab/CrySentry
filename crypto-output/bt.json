@@ -1,71 +1,73 @@
 [ {
   "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "%stringconst0 = \"SHA-1\"",
-  "sourceMethod" : "<bt.service.CryptoUtil: byte[] getSha1Digest(byte[])>",
-  "callSite" : "<bt.service.CryptoUtil: byte[] getSha1Digest(byte[])>[1@L39] $r0 = invokestatic java.security.MessageDigest.getInstance(%stringconst0)",
-  "var" : "%stringconst0",
-  "constantValue" : "SHA-1",
-  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>",
-  "subSignature" : "byte[] getSha1Digest(byte[])"
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c11 = \"ARCFOUR\"",
+  "sourceMethod" : "<bt.protocol.crypto.MSECipher: java.security.Key getEncryptionKey(java.lang.String,byte[],byte[])>",
+  "callSite" : "<bt.protocol.crypto.MSECipher: java.security.Key getEncryptionKey(java.lang.String,byte[],byte[])>[11@L128] invokespecial $-v10.<init>($-v12, $-c11)",
+  "var" : "$-c11",
+  "constantValue" : "ARCFOUR",
+  "calleeMethod" : "<javax.crypto.spec.SecretKeySpec: void <init>(byte[],java.lang.String)>"
 }, {
   "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "%stringconst0 = \"SHA-1\"",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c3 = \"SHA-1\"",
+  "sourceMethod" : "<bt.service.CryptoUtil: byte[] getSha1Digest(byte[])>",
+  "callSite" : "<bt.service.CryptoUtil: byte[] getSha1Digest(byte[])>[1@L39] cryptor = invokestatic java.security.MessageDigest.getInstance($-c3)",
+  "var" : "$-c3",
+  "constantValue" : "SHA-1",
+  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>"
+}, {
+  "judgeType" : "Pattern Match",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c2 = \"SHA-1\"",
+  "sourceMethod" : "<bt.data.digest.SHA1Digester: void <init>(int)>",
+  "callSite" : "<bt.data.digest.JavaSecurityDigester: java.security.MessageDigest createDigest()>[1@L84] $-v3 = invokestatic java.security.MessageDigest.getInstance($-v2)",
+  "var" : "$-v2",
+  "constantValue" : "SHA-1",
+  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>"
+}, {
+  "judgeType" : "Pattern Match",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c56 = \"SHA-1\"",
+  "sourceMethod" : "<bt.net.crypto.MSEHandshakeProcessor: java.util.Optional negotiateOutgoing(bt.net.Peer,java.nio.channels.ByteChannel,bt.metainfo.TorrentId,java.nio.ByteBuffer,java.nio.ByteBuffer)>",
+  "callSite" : "<bt.net.crypto.MSEHandshakeProcessor: java.security.MessageDigest getDigest(java.lang.String)>[0@L517] $-v3 = invokestatic java.security.MessageDigest.getInstance(algorithm)",
+  "var" : "algorithm",
+  "constantValue" : "SHA-1",
+  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>"
+}, {
+  "judgeType" : "Pattern Match",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c78 = \"SHA-1\"",
+  "sourceMethod" : "<bt.net.crypto.MSEHandshakeProcessor: java.util.Optional negotiateIncoming(bt.net.Peer,java.nio.channels.ByteChannel,java.nio.ByteBuffer,java.nio.ByteBuffer)>",
+  "callSite" : "<bt.net.crypto.MSEHandshakeProcessor: java.security.MessageDigest getDigest(java.lang.String)>[0@L517] $-v3 = invokestatic java.security.MessageDigest.getInstance(algorithm)",
+  "var" : "algorithm",
+  "constantValue" : "SHA-1",
+  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>"
+}, {
+  "judgeType" : "Pattern Match",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c4 = \"SHA-1\"",
   "sourceMethod" : "<bt.module.ServiceModule: bt.data.digest.Digester provideDigester()>",
   "callSite" : "<bt.data.digest.JavaSecurityDigester: void <init>(java.lang.String,int)>[1@L34] invokestatic java.security.MessageDigest.getInstance(algorithm)",
   "var" : "algorithm",
   "constantValue" : "SHA-1",
-  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>",
-  "subSignature" : "void <init>(java.lang.String,int)"
+  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>"
 }, {
   "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "%stringconst0 = \"SHA-1\"",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c2 = \"SHA-1\"",
   "sourceMethod" : "<bt.data.digest.SHA1Digester: void <init>(int)>",
   "callSite" : "<bt.data.digest.JavaSecurityDigester: void <init>(java.lang.String,int)>[1@L34] invokestatic java.security.MessageDigest.getInstance(algorithm)",
   "var" : "algorithm",
   "constantValue" : "SHA-1",
-  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>",
-  "subSignature" : "void <init>(java.lang.String,int)"
+  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>"
 }, {
   "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "%stringconst0 = \"SHA-1\"",
-  "sourceMethod" : "<bt.data.digest.SHA1Digester: void <init>(int)>",
-  "callSite" : "<bt.data.digest.JavaSecurityDigester: java.security.MessageDigest createDigest()>[1@L84] $r2 = invokestatic java.security.MessageDigest.getInstance($r1)",
-  "var" : "$r1",
-  "constantValue" : "SHA-1",
-  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>",
-  "subSignature" : "java.security.MessageDigest createDigest()"
-}, {
-  "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "%stringconst3 = \"SHA-1\"",
-  "sourceMethod" : "<bt.net.crypto.MSEHandshakeProcessor: java.util.Optional negotiateOutgoing(bt.net.Peer,java.nio.channels.ByteChannel,bt.metainfo.TorrentId,java.nio.ByteBuffer,java.nio.ByteBuffer)>",
-  "callSite" : "<bt.net.crypto.MSEHandshakeProcessor: java.security.MessageDigest getDigest(java.lang.String)>[0@L517] $r1 = invokestatic java.security.MessageDigest.getInstance(algorithm)",
-  "var" : "algorithm",
-  "constantValue" : "SHA-1",
-  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>",
-  "subSignature" : "java.security.MessageDigest getDigest(java.lang.String)"
-}, {
-  "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "%stringconst4 = \"SHA-1\"",
-  "sourceMethod" : "<bt.net.crypto.MSEHandshakeProcessor: java.util.Optional negotiateIncoming(bt.net.Peer,java.nio.channels.ByteChannel,java.nio.ByteBuffer,java.nio.ByteBuffer)>",
-  "callSite" : "<bt.net.crypto.MSEHandshakeProcessor: java.security.MessageDigest getDigest(java.lang.String)>[0@L517] $r1 = invokestatic java.security.MessageDigest.getInstance(algorithm)",
-  "var" : "algorithm",
-  "constantValue" : "SHA-1",
-  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>",
-  "subSignature" : "java.security.MessageDigest getDigest(java.lang.String)"
-}, {
-  "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "%stringconst0 = \"SHA-1\"",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c5 = \"SHA-1\"",
   "sourceMethod" : "<bt.protocol.crypto.MSECipher: java.security.Key getEncryptionKey(java.lang.String,byte[],byte[])>",
-  "callSite" : "<bt.protocol.crypto.MSECipher: java.security.MessageDigest getDigest(java.lang.String)>[0@L133] $r1 = invokestatic java.security.MessageDigest.getInstance(algorithm)",
+  "callSite" : "<bt.protocol.crypto.MSECipher: java.security.MessageDigest getDigest(java.lang.String)>[0@L133] $-v3 = invokestatic java.security.MessageDigest.getInstance(algorithm)",
   "var" : "algorithm",
   "constantValue" : "SHA-1",
-  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>",
-  "subSignature" : "java.security.MessageDigest getDigest(java.lang.String)"
+  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>"
 } ]

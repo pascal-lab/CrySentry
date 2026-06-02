@@ -436,7 +436,7 @@ public final class Tests {
         }
 
         List<String> cryptoArchives1;
-        List<String> cryptoArchives2;
+//        List<String> cryptoArchives2;
         List<String> cryptoArchives = new ArrayList<>();
         try {
             cryptoArchives1 = Files.list(Path.of(benchmark.dir))
@@ -453,7 +453,7 @@ public final class Tests {
 //                    .toList();
             cryptoArchives.addAll(cryptoArchives1);
 //            cryptoArchives.addAll(cryptoArchives2);
-            logger.info("{} Microservices detected: {}", cryptoArchives.size(), cryptoArchives);
+            logger.info("{} jar detected: {}", cryptoArchives.size(), cryptoArchives);
         } catch (IOException e) {
             logger.error("", e);
             throw new RuntimeException(e);
@@ -466,26 +466,6 @@ public final class Tests {
         // de-duplication the dependency jar and add it into dependencyPaths
         List<Tuple<String, List<String>, List<String>>> tuples = new ArrayList<>();
         tuples.add(tuple);
-        tuples.stream()
-                .map(Tuple::third)
-                .flatMap(Collection::stream)
-                .map(File::new)
-                .collect(Collectors.toMap(File::getName, Function.identity(), (o1, o2) -> o1))
-                .values()
-                .stream()
-                .map(File::getAbsolutePath)
-                // fix Soot issue:
-                // Trying to create interface invoke expression for non-interface type: org.bouncycastle.asn1.ASN1Encodable
-                .filter(o -> !o.contains("bcprov-jdk"))
-                // fix Soot issue:
-                // This operation requires resolving level HIERARCHY but net.sf.cglib.proxy.MethodInterceptor is at resolving level DANGLING
-                // If you are extending Soot, try to add the following call before calling soot.Main.main(..):
-                // Scene.v().addBasicClass(net.sf.cglib.proxy.MethodInterceptor,HIERARCHY);
-                .filter(o -> !o.contains("seata-all"))
-                //// fix Soot issue:
-                //// Failed to apply jb to <org.elasticsearch.search.aggregations.metrics.AbstractHyperLogLog: void <clinit>()>
-                //.filter(o -> !o.contains("elasticsearch-7.10.1.jar"))
-                .forEach(dependencyPaths::add);
 
         Collection<String> appPathsInDependency = AppClassInferringUtils.inferAppJarPaths(
                 tuples.stream().map(Tuple::second).flatMap(Collection::stream).toList(),
@@ -526,7 +506,7 @@ public final class Tests {
                         crypto-config:src/test/resources/pta/cryptomisuse/crypto-config.yml;
                         plugins:[pascal.taie.analysis.pta.plugin.cryptomisuse.reachableplugin.CryptoReachablePlugin,
                                  pascal.taie.analysis.pta.plugin.Profiler];
-                        """.formatted(onlyApp, cs, "crypto-output/apachebench/" + benchmark.name + ".json"),
+                        """.formatted(onlyApp, cs, "crypto-output/" + benchmark.name + ".json"),
                 "-a", """
                         cg=
                         algorithm:pta;
@@ -561,7 +541,7 @@ public final class Tests {
                     .toList();
             cryptoArchives.addAll(cryptoArchives1);
             cryptoArchives.addAll(cryptoArchives2);
-            logger.info("{} Microservices detected: {}", cryptoArchives.size(), cryptoArchives);
+            logger.info("{} jar detected: {}", cryptoArchives.size(), cryptoArchives);
         } catch (IOException e) {
             logger.error("", e);
             throw new RuntimeException(e);

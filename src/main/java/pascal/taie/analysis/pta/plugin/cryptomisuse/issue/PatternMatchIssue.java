@@ -10,8 +10,7 @@ import java.lang.invoke.CallSite;
 public class PatternMatchIssue implements Issue {
     public PatternMatchIssue(String judgeType, String message, String sourceStmt,
                              String sourceMethod, Invoke callSite, String var,
-                             String constantValue, String calleeMethod,
-                             String subSignature) {
+                             String constantValue, String calleeMethod) {
         this.judgeType = judgeType;
         this.message = message;
         this.sourceStmt = sourceStmt;
@@ -20,7 +19,6 @@ public class PatternMatchIssue implements Issue {
         this.var = var;
         this.constantValue = constantValue;
         this.calleeMethod = calleeMethod;
-        this.subSignature = subSignature;
     }
 
     @JsonProperty("judgeType")
@@ -49,8 +47,6 @@ public class PatternMatchIssue implements Issue {
     private String constantValue;
     @JsonProperty("calleeMethod")
     private String calleeMethod;
-    @JsonProperty("subSignature")
-    private String subSignature;
 
     public String getCalleeMethod(){
         return  calleeMethod;

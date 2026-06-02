@@ -1,126 +1,118 @@
 [ {
+  "judgeType" : "Pattern Match",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c2 = \"DES\"",
+  "sourceMethod" : "<org.example.BrokenCryptoTestWithLowOrthogonalOfString: void go3()>",
+  "callSite" : "<org.example.BrokenCryptoTestWithLowOrthogonalOfString: void go()>[3@L18] keyGen = invokestatic javax.crypto.KeyGenerator.getInstance($-v5)",
+  "var" : "$-v5",
+  "constantValue" : "DES",
+  "calleeMethod" : "<javax.crypto.KeyGenerator: javax.crypto.KeyGenerator getInstance(java.lang.String)>"
+}, {
+  "judgeType" : "Pattern Match",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c2 = \"DES\"",
+  "sourceMethod" : "<org.example.BrokenCryptoTestWithoutOrthogonalOfString: void <clinit>()>",
+  "callSite" : "<org.example.BrokenCryptoTestWithoutOrthogonalOfString: void go()>[3@L19] keyGen = invokestatic javax.crypto.KeyGenerator.getInstance($-v5)",
+  "var" : "$-v5",
+  "constantValue" : "DES",
+  "calleeMethod" : "<javax.crypto.KeyGenerator: javax.crypto.KeyGenerator getInstance(java.lang.String)>"
+}, {
+  "judgeType" : "Pattern Match",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c2 = \"DES\"",
+  "sourceMethod" : "<org.example.BrokenCryptoTestWithHighOrthogonalOfString: void go2()>",
+  "callSite" : "<org.example.BrokenCryptoTestWithHighOrthogonalOfString: void go()>[3@L21] keyGen = invokestatic javax.crypto.KeyGenerator.getInstance($-v5)",
+  "var" : "$-v5",
+  "constantValue" : "DES",
+  "calleeMethod" : "<javax.crypto.KeyGenerator: javax.crypto.KeyGenerator getInstance(java.lang.String)>"
+}, {
+  "judgeType" : "Pattern Match",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c0 = \"DES/ECB/PKCS5Padding\"",
+  "sourceMethod" : "<org.example.BrokenCryptoTestWithLowOrthogonalOfString: void go3()>",
+  "callSite" : "<org.example.BrokenCryptoTestWithLowOrthogonalOfString: void go()>[7@L20] cipher = invokestatic javax.crypto.Cipher.getInstance($-v9)",
+  "var" : "$-v9",
+  "constantValue" : "DES/ECB/PKCS5Padding",
+  "calleeMethod" : "<javax.crypto.Cipher: javax.crypto.Cipher getInstance(java.lang.String)>"
+}, {
+  "judgeType" : "Pattern Match",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c0 = \"DES/ECB/PKCS5Padding\"",
+  "sourceMethod" : "<org.example.BrokenCryptoTestWithoutOrthogonalOfString: void <clinit>()>",
+  "callSite" : "<org.example.BrokenCryptoTestWithoutOrthogonalOfString: void go()>[7@L21] cipher = invokestatic javax.crypto.Cipher.getInstance($-v9)",
+  "var" : "$-v9",
+  "constantValue" : "DES/ECB/PKCS5Padding",
+  "calleeMethod" : "<javax.crypto.Cipher: javax.crypto.Cipher getInstance(java.lang.String)>"
+}, {
+  "judgeType" : "Pattern Match",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c0 = \"DES/ECB/PKCS5Padding\"",
+  "sourceMethod" : "<org.example.BrokenCryptoTestWithHighOrthogonalOfString: void go2()>",
+  "callSite" : "<org.example.BrokenCryptoTestWithHighOrthogonalOfString: void go()>[7@L23] cipher = invokestatic javax.crypto.Cipher.getInstance($-v9)",
+  "var" : "$-v9",
+  "constantValue" : "DES/ECB/PKCS5Padding",
+  "calleeMethod" : "<javax.crypto.Cipher: javax.crypto.Cipher getInstance(java.lang.String)>"
+}, {
+  "judgeType" : "Pattern Match",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c1 = \"AES\"",
+  "sourceMethod" : "<org.example.BrokenCryptoTestWithUnsafeString: void <init>()>",
+  "callSite" : "<org.example.BrokenCryptoTestWithUnsafeString: void go(java.lang.String,java.lang.String)>[32@L24] cipher = invokestatic javax.crypto.Cipher.getInstance($-v29)",
+  "var" : "$-v29",
+  "constantValue" : "AES",
+  "calleeMethod" : "<javax.crypto.Cipher: javax.crypto.Cipher getInstance(java.lang.String)>"
+}, {
+  "judgeType" : "Pattern Match",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c4 = \"DES/ECB/PKCS5Padding\"",
+  "sourceMethod" : "<org.example.PredictableKeyWithMultipleOrthogonal.Crypto: byte[] cipherEncrypt(java.lang.String,java.security.Key)>",
+  "callSite" : "<org.example.PredictableKeyWithMultipleOrthogonal.Crypto: byte[] cipherEncrypt(java.lang.String,java.security.Key)>[2@L36] cipher = invokestatic javax.crypto.Cipher.getInstance($-c4)",
+  "var" : "$-c4",
+  "constantValue" : "DES/ECB/PKCS5Padding",
+  "calleeMethod" : "<javax.crypto.Cipher: javax.crypto.Cipher getInstance(java.lang.String)>"
+}, {
   "judgeType" : "Predictable Source",
   "message" : "The value of the API is not well randomized",
-  "sourceStmt" : "$r1[%intconst11] = %intconst11",
+  "sourceStmt" : "$-v1[$-ci0] = $-c3",
+  "sourceMethod" : "<org.example.BrokenCryptoTestWithoutOrthogonalOfKey: void <clinit>()>",
+  "callSite" : "<org.example.BrokenCryptoTestWithoutOrthogonalOfKey: void go()>[3@L16] invokevirtual sr.setSeed($-v3)",
+  "var" : "$-v3",
+  "calleeMethod" : "<java.security.SecureRandom: void setSeed(byte[])>",
+  "subSignature" : "void go()"
+}, {
+  "judgeType" : "Predictable Source",
+  "message" : "The value of the API is not well randomized",
+  "sourceStmt" : "$-v1[$-ci0] = $-c3",
+  "sourceMethod" : "<org.example.BrokenCryptoTestWithLowOrthogonalOfKey: void <clinit>()>",
+  "callSite" : "<org.example.BrokenCryptoTestWithLowOrthogonalOfKey: void go()>[3@L22] invokevirtual sr.setSeed($-v3)",
+  "var" : "$-v3",
+  "calleeMethod" : "<java.security.SecureRandom: void setSeed(byte[])>",
+  "subSignature" : "void go()"
+}, {
+  "judgeType" : "Predictable Source",
+  "message" : "The value of the API is not well randomized",
+  "sourceStmt" : "$-v1[$-ci0] = $-c3",
+  "sourceMethod" : "<org.example.BrokenCryptoTestWithHighOrthogonalOfKey: void <clinit>()>",
+  "callSite" : "<org.example.BrokenCryptoTestWithHighOrthogonalOfKey: void go()>[3@L29] invokevirtual sr.setSeed($-v3)",
+  "var" : "$-v3",
+  "calleeMethod" : "<java.security.SecureRandom: void setSeed(byte[])>",
+  "subSignature" : "void go()"
+}, {
+  "judgeType" : "Predictable Source",
+  "message" : "The value of the API is not well randomized",
+  "sourceStmt" : "key[$-ci0] = $-c12",
   "sourceMethod" : "<org.example.BrokenCryptoTestWithUnsafeString: void go(java.lang.String,java.lang.String)>",
-  "callSite" : "<org.example.BrokenCryptoTestWithUnsafeString: void go(java.lang.String,java.lang.String)>[29@L23] invokespecial $r5.<init>($r4, keyAlgo)",
-  "var" : "$r4",
+  "callSite" : "<org.example.BrokenCryptoTestWithUnsafeString: void go(java.lang.String,java.lang.String)>[30@L23] invokespecial keySpc.<init>(key#2, keyAlgo)",
+  "var" : "key#2",
   "calleeMethod" : "<javax.crypto.spec.SecretKeySpec: void <init>(byte[],java.lang.String)>",
   "subSignature" : "void go(java.lang.String,java.lang.String)"
 }, {
   "judgeType" : "Predictable Source",
   "message" : "The value of the API is not well randomized",
-  "sourceStmt" : "%stringconst1 = \"defaultKey\"",
-  "sourceMethod" : "<org.example.PredictableKeyWithMultipleOrthogonal.PasswordEncryptor: java.lang.String getKey(java.lang.String)>",
-  "callSite" : "<org.example.PredictableKeyWithMultipleOrthogonal.Crypto: java.security.Key generateSecretKey(java.lang.String)>[3@L31] invokespecial $r2.<init>($r1, %stringconst0)",
-  "var" : "$r1",
+  "sourceStmt" : "",
+  "sourceMethod" : "",
+  "callSite" : "<org.example.PredictableKeyWithMultipleOrthogonal.Crypto: java.security.Key generateSecretKey(java.lang.String)>[3@L31] invokespecial $-v4.<init>(keyBytes, $-c5)",
+  "var" : "keyBytes",
   "calleeMethod" : "<javax.crypto.spec.SecretKeySpec: void <init>(byte[],java.lang.String)>",
   "subSignature" : "java.security.Key generateSecretKey(java.lang.String)"
-}, {
-  "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "$r2 = \"DES\"",
-  "sourceMethod" : "<org.example.BrokenCryptoTestWithHighOrthogonalOfString: void go2()>",
-  "callSite" : "<org.example.BrokenCryptoTestWithHighOrthogonalOfString: void go()>[2@L21] $r2 = invokestatic javax.crypto.KeyGenerator.getInstance($r1)",
-  "var" : "$r1",
-  "constantValue" : "DES",
-  "calleeMethod" : "<javax.crypto.KeyGenerator: javax.crypto.KeyGenerator getInstance(java.lang.String)>",
-  "subSignature" : "void go()"
-}, {
-  "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "$r2 = \"DES\"",
-  "sourceMethod" : "<org.example.BrokenCryptoTestWithoutOrthogonalOfString: void <clinit>()>",
-  "callSite" : "<org.example.BrokenCryptoTestWithoutOrthogonalOfString: void go()>[2@L19] $r2 = invokestatic javax.crypto.KeyGenerator.getInstance($r1)",
-  "var" : "$r1",
-  "constantValue" : "DES",
-  "calleeMethod" : "<javax.crypto.KeyGenerator: javax.crypto.KeyGenerator getInstance(java.lang.String)>",
-  "subSignature" : "void go()"
-}, {
-  "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "$r2 = \"DES\"",
-  "sourceMethod" : "<org.example.BrokenCryptoTestWithLowOrthogonalOfString: void go3()>",
-  "callSite" : "<org.example.BrokenCryptoTestWithLowOrthogonalOfString: void go()>[2@L18] $r2 = invokestatic javax.crypto.KeyGenerator.getInstance($r1)",
-  "var" : "$r1",
-  "constantValue" : "DES",
-  "calleeMethod" : "<javax.crypto.KeyGenerator: javax.crypto.KeyGenerator getInstance(java.lang.String)>",
-  "subSignature" : "void go()"
-}, {
-  "judgeType" : "Predictable Source",
-  "message" : "The value of the API is not well randomized",
-  "sourceStmt" : "$r0[%intconst3] = %intconst4",
-  "sourceMethod" : "<org.example.BrokenCryptoTestWithLowOrthogonalOfKey: void <clinit>()>",
-  "callSite" : "<org.example.BrokenCryptoTestWithLowOrthogonalOfKey: void go()>[3@L22] invokevirtual $r0.setSeed($r1)",
-  "var" : "$r1",
-  "calleeMethod" : "<java.security.SecureRandom: void setSeed(byte[])>",
-  "subSignature" : "void go()"
-}, {
-  "judgeType" : "Predictable Source",
-  "message" : "The value of the API is not well randomized",
-  "sourceStmt" : "$r0[%intconst3] = %intconst4",
-  "sourceMethod" : "<org.example.BrokenCryptoTestWithHighOrthogonalOfKey: void <clinit>()>",
-  "callSite" : "<org.example.BrokenCryptoTestWithHighOrthogonalOfKey: void go()>[3@L29] invokevirtual $r0.setSeed($r1)",
-  "var" : "$r1",
-  "calleeMethod" : "<java.security.SecureRandom: void setSeed(byte[])>",
-  "subSignature" : "void go()"
-}, {
-  "judgeType" : "Predictable Source",
-  "message" : "The value of the API is not well randomized",
-  "sourceStmt" : "$r0[%intconst3] = %intconst4",
-  "sourceMethod" : "<org.example.BrokenCryptoTestWithoutOrthogonalOfKey: void <clinit>()>",
-  "callSite" : "<org.example.BrokenCryptoTestWithoutOrthogonalOfKey: void go()>[3@L16] invokevirtual $r0.setSeed($r1)",
-  "var" : "$r1",
-  "calleeMethod" : "<java.security.SecureRandom: void setSeed(byte[])>",
-  "subSignature" : "void go()"
-}, {
-  "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "$r0 = \"DES/ECB/PKCS5Padding\"",
-  "sourceMethod" : "<org.example.BrokenCryptoTestWithHighOrthogonalOfString: void go2()>",
-  "callSite" : "<org.example.BrokenCryptoTestWithHighOrthogonalOfString: void go()>[6@L23] $r6 = invokestatic javax.crypto.Cipher.getInstance($r5)",
-  "var" : "$r5",
-  "constantValue" : "DES/ECB/PKCS5Padding",
-  "calleeMethod" : "<javax.crypto.Cipher: javax.crypto.Cipher getInstance(java.lang.String)>",
-  "subSignature" : "void go()"
-}, {
-  "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "%stringconst0 = \"AES\"",
-  "sourceMethod" : "<org.example.BrokenCryptoTestWithUnsafeString: void <init>()>",
-  "callSite" : "<org.example.BrokenCryptoTestWithUnsafeString: void go(java.lang.String,java.lang.String)>[31@L24] $r8 = invokestatic javax.crypto.Cipher.getInstance($r7)",
-  "var" : "$r7",
-  "constantValue" : "AES",
-  "calleeMethod" : "<javax.crypto.Cipher: javax.crypto.Cipher getInstance(java.lang.String)>",
-  "subSignature" : "void go(java.lang.String,java.lang.String)"
-}, {
-  "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "$r0 = \"DES/ECB/PKCS5Padding\"",
-  "sourceMethod" : "<org.example.BrokenCryptoTestWithoutOrthogonalOfString: void <clinit>()>",
-  "callSite" : "<org.example.BrokenCryptoTestWithoutOrthogonalOfString: void go()>[6@L21] $r6 = invokestatic javax.crypto.Cipher.getInstance($r5)",
-  "var" : "$r5",
-  "constantValue" : "DES/ECB/PKCS5Padding",
-  "calleeMethod" : "<javax.crypto.Cipher: javax.crypto.Cipher getInstance(java.lang.String)>",
-  "subSignature" : "void go()"
-}, {
-  "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "$r0 = \"DES/ECB/PKCS5Padding\"",
-  "sourceMethod" : "<org.example.BrokenCryptoTestWithLowOrthogonalOfString: void go3()>",
-  "callSite" : "<org.example.BrokenCryptoTestWithLowOrthogonalOfString: void go()>[6@L20] $r6 = invokestatic javax.crypto.Cipher.getInstance($r5)",
-  "var" : "$r5",
-  "constantValue" : "DES/ECB/PKCS5Padding",
-  "calleeMethod" : "<javax.crypto.Cipher: javax.crypto.Cipher getInstance(java.lang.String)>",
-  "subSignature" : "void go()"
-}, {
-  "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "%stringconst0 = \"DES/ECB/PKCS5Padding\"",
-  "sourceMethod" : "<org.example.PredictableKeyWithMultipleOrthogonal.Crypto: byte[] cipherEncrypt(java.lang.String,java.security.Key)>",
-  "callSite" : "<org.example.PredictableKeyWithMultipleOrthogonal.Crypto: byte[] cipherEncrypt(java.lang.String,java.security.Key)>[1@L36] $r0 = invokestatic javax.crypto.Cipher.getInstance(%stringconst0)",
-  "var" : "%stringconst0",
-  "constantValue" : "DES/ECB/PKCS5Padding",
-  "calleeMethod" : "<javax.crypto.Cipher: javax.crypto.Cipher getInstance(java.lang.String)>",
-  "subSignature" : "byte[] cipherEncrypt(java.lang.String,java.security.Key)"
 } ]

@@ -1,38 +1,26 @@
 [ {
+  "judgeType" : "Predictable Source",
+  "message" : "The value of the API is not well randomized",
+  "sourceStmt" : "",
+  "sourceMethod" : "",
+  "callSite" : "<com.quick.api.utils.SignUtil: java.lang.String sign(java.lang.String,java.lang.String,java.lang.String,java.util.Map,java.util.Map,java.util.Map,java.util.List)>[8@L47] invokespecial $-v13.<init>(keyBytes, $-ci0, $-v16, $-c15)",
+  "var" : "keyBytes",
+  "calleeMethod" : "<javax.crypto.spec.SecretKeySpec: void <init>(byte[],int,int,java.lang.String)>",
+  "subSignature" : "java.lang.String sign(java.lang.String,java.lang.String,java.lang.String,java.util.Map,java.util.Map,java.util.Map,java.util.List)"
+}, {
   "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
+  "message" : "This HTTP link is vulnerable to interception; use HTTPS to secure the transmission of information.",
   "sourceStmt" : "$-c5 = \"http://mini.eastday.com/mobile/170725205647104.html\"",
   "sourceMethod" : "<com.quick.api.service.NewService: void main(java.lang.String[])>",
   "callSite" : "<com.quick.api.service.NewService: void main(java.lang.String[])>[3@L75] invokespecial $-v4.<init>($-c5)",
   "var" : "$-c5",
   "constantValue" : "http://mini.eastday.com/mobile/170725205647104.html",
-  "calleeMethod" : "<java.net.URL: void <init>(java.lang.String)>",
-  "subSignature" : "void main(java.lang.String[])"
-}, {
-  "judgeType" : "Influencing Factor",
-  "message" : "Should process the return value of this method instead of returning directly",
-  "calleeMethod" : "<com.quick.api.utils.HttpUtils$1: java.security.cert.X509Certificate[] getAcceptedIssuers()>",
-  "subSignature" : "java.security.cert.X509Certificate[] getAcceptedIssuers()"
+  "calleeMethod" : "<java.net.URL: void <init>(java.lang.String)>"
 }, {
   "judgeType" : "Influencing Factor",
   "message" : "Should throw an exception or produce some output based on the exception information in this method",
   "calleeMethod" : "<com.quick.api.utils.HttpUtil$1: void checkClientTrusted(java.security.cert.X509Certificate[],java.lang.String)>",
   "subSignature" : "void checkClientTrusted(java.security.cert.X509Certificate[],java.lang.String)"
-}, {
-  "judgeType" : "Pattern Match",
-  "message" : "The pattern is not matched for the API",
-  "sourceStmt" : "$-c7 = \"MD5\"",
-  "sourceMethod" : "<com.quick.api.utils.MessageDigestUtil: java.lang.String base64AndMD5(byte[])>",
-  "callSite" : "<com.quick.api.utils.MessageDigestUtil: java.lang.String base64AndMD5(byte[])>[6@L45] md = invokestatic java.security.MessageDigest.getInstance($-c7)",
-  "var" : "$-c7",
-  "constantValue" : "MD5",
-  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>",
-  "subSignature" : "java.lang.String base64AndMD5(byte[])"
-}, {
-  "judgeType" : "Influencing Factor",
-  "message" : "Should throw an exception or produce some output based on the exception information in this method",
-  "calleeMethod" : "<com.quick.api.utils.HttpUtil$1: void checkServerTrusted(java.security.cert.X509Certificate[],java.lang.String)>",
-  "subSignature" : "void checkServerTrusted(java.security.cert.X509Certificate[],java.lang.String)"
 }, {
   "judgeType" : "Influencing Factor",
   "message" : "Should throw an exception or produce some output based on the exception information in this method",
@@ -40,12 +28,31 @@
   "subSignature" : "void checkClientTrusted(java.security.cert.X509Certificate[],java.lang.String)"
 }, {
   "judgeType" : "Influencing Factor",
-  "message" : "Should process the return value of this method instead of returning directly",
+  "message" : "Should throw an exception or produce some output based on the exception information in this method",
+  "calleeMethod" : "<com.quick.api.utils.HttpUtils$1: void checkServerTrusted(java.security.cert.X509Certificate[],java.lang.String)>",
+  "subSignature" : "void checkServerTrusted(java.security.cert.X509Certificate[],java.lang.String)"
+}, {
+  "judgeType" : "Influencing Factor",
+  "message" : "Should process the return value of this method instead of returning directly with the def influencing factor: getAcceptedIssuers()",
   "calleeMethod" : "<com.quick.api.utils.HttpUtil$1: java.security.cert.X509Certificate[] getAcceptedIssuers()>",
   "subSignature" : "java.security.cert.X509Certificate[] getAcceptedIssuers()"
 }, {
   "judgeType" : "Influencing Factor",
+  "message" : "Should process the return value of this method instead of returning directly with the def influencing factor: getAcceptedIssuers()",
+  "calleeMethod" : "<com.quick.api.utils.HttpUtils$1: java.security.cert.X509Certificate[] getAcceptedIssuers()>",
+  "subSignature" : "java.security.cert.X509Certificate[] getAcceptedIssuers()"
+}, {
+  "judgeType" : "Pattern Match",
+  "message" : "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+  "sourceStmt" : "$-c7 = \"MD5\"",
+  "sourceMethod" : "<com.quick.api.utils.MessageDigestUtil: java.lang.String base64AndMD5(byte[])>",
+  "callSite" : "<com.quick.api.utils.MessageDigestUtil: java.lang.String base64AndMD5(byte[])>[6@L45] md = invokestatic java.security.MessageDigest.getInstance($-c7)",
+  "var" : "$-c7",
+  "constantValue" : "MD5",
+  "calleeMethod" : "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>"
+}, {
+  "judgeType" : "Influencing Factor",
   "message" : "Should throw an exception or produce some output based on the exception information in this method",
-  "calleeMethod" : "<com.quick.api.utils.HttpUtils$1: void checkServerTrusted(java.security.cert.X509Certificate[],java.lang.String)>",
+  "calleeMethod" : "<com.quick.api.utils.HttpUtil$1: void checkServerTrusted(java.security.cert.X509Certificate[],java.lang.String)>",
   "subSignature" : "void checkServerTrusted(java.security.cert.X509Certificate[],java.lang.String)"
 } ]

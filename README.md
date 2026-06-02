@@ -1,153 +1,82 @@
+# CrySentry: A Tai-e Plugin for Detecting Java Crypto API Misuse
+
+CrySentry is a static analysis tool for detecting **Java cryptographic API misuses** based on Tai-e whole-program pointer analysis and taint analysis.
+
+
+
+---
+
+## Why CrySentry?
+
+
+"Cryptography is a vital technology that underpins the security of information in computer networks".
+As the cornerstone of modern security frameworks, cryptography is crucial for protecting sensitive data, safeguarding transactions and communications, authenticating identities, and more.
+
+
+The Java platform provides cryptography-related functionalities through the Java Cryptography Architecture (JCA) and the Java Secure Socket Extension (JSSE), enabling encryption, key generation, secure communication, and other tasks.
+
+However, the complexity of crytpo API usage, combined with developers' general lack of security knowledge, often results in cryptographic API (crypto API) misuses, leading to security vulnerabilities such as sensitive data leaks, broken authentication, and man-in-the-middle attacks.
+
+Existing crypto API misuse detectors still suffer from false negatives caused by restricted interprocedural tracking and insufficient alias analysis, as well as false positives introduced by coarse-grained detection rules.
+
+On four widely used crypto API misuse benchmark suites: MUBench, OWASP Benchmark, Apache Crypto API Bench, and Crypto API Bench, **CrySentry** achieves consistently better soundness (**97.5% average recall**) and precision (**96.7% precision**), compared with state-of-the-art tools including CryptoGuard, CrySL, and FindSecBugs.
+
 <div align="center">
-  <img src="tai-e-logo.png" height="200">
-
-# Tai-e
-
-[![test](https://github.com/pascal-lab/Tai-e/actions/workflows/test.yml/badge.svg)](https://github.com/pascal-lab/Tai-e/actions/workflows/test.yml)
-[![java](https://img.shields.io/badge/Java-17-informational)](https://openjdk.java.net/)
-[![maven-central](https://img.shields.io/badge/dynamic/xml.svg?label=maven-central&color=f1834d&query=//metadata/versioning/latest&url=https://repo1.maven.org/maven2/net/pascal-lab/tai-e/maven-metadata.xml)](https://search.maven.org/artifact/net.pascal-lab/tai-e)
-[![codecov](https://codecov.io/gh/pascal-lab/Tai-e/branch/master/graph/badge.svg)](https://codecov.io/gh/pascal-lab/Tai-e)
-[![DOI](https://img.shields.io/badge/DOI-10.1145/3597926.3598120-blue)](https://doi.org/10.1145/3597926.3598120)
+  <img src="fig/evaluation.png" width="430" height="330" alt="Evaluation Overview">
+  <p><strong>Figure 1: Evaluation overview comparing CrySentry with existing tools.</strong></p>
 </div>
 
-## Table of Contents
 
-- [What is Tai-e?](#what-is-tai-e)
-- [How to Obtain Runnable Jar of Tai-e?](#how-to-obtain-runnable-jar-of-tai-e)
-- [How to Include Tai-e in Your Project?](#how-to-include-tai-e-in-your-project)
-    - [Stable Version](#stable-version)
-    - [Latest Version](#latest-version)
-- [Documentation](#documentation)
-    - [Reference Documentation](#reference-documentation)
-    - [Changelog](#changelog)
-- [Tai-e Assignments](#tai-e-assignments)
 
-## What is Tai-e?
+---
 
-Tai-e (Chinese: 太阿; pronunciation: [ˈtaɪə:]) is a new static analysis framework for Java (please see our [ISSTA 2023 paper](https://cs.nju.edu.cn/tiantan/papers/issta2023.pdf) for details), which features arguably the "best" designs from both the novel ones we proposed and those of classic frameworks such as Soot, WALA, Doop, and SpotBugs.
-Tai-e is easy-to-learn, easy-to-use, efficient, and highly extensible, allowing you to easily develop new analyses on top of it.
+## Overview
 
-Currently, Tai-e provides the following major analysis components (and more analyses are on the
-way):
+A major and challenging class of crypto API misuse involves insecure crypto information being used in security-sensitive API calls. CrySentry is designed to detect such misuses using Tai-e’s whole-program pointer analysis and taint analysis framework.
 
-- Powerful pointer analysis framework
-  - On-the-fly call graph construction
-  - Various classic and advanced techniques of heap abstraction and context sensitivity for pointer analysis
-  - Extensible analysis plugin system (allows to conveniently develop and add new analyses that interact with pointer analysis)
-- Configurable security analysis
-  - Taint analysis, which allows to configure sources, sinks, taint transfers, and sanitizers
-  - Detection of various information leakages and injection vulnerabilities
-  - Various precision and efficiency tradeoffs (benefit from the pointer analysis framework)
-- Various fundamental/utility analyses
-  - Fundamental analyses, e.g., reflection analysis and exception analysis
-  - Modern language feature analyses, e.g., lambda and method reference analysis, and invokedynamic analysis
-  - Utility tools like analysis timer, constraint checker (for debugging), and various graph dumpers
-- Control/Data-flow analysis framework
-  - Control-flow graph construction
-  - Classic data-flow analyses, e.g., live variable analysis, constant propagation
-  - Your data-flow analyses
-- SpotBugs-like bug detection system
-  - Bug detectors, e.g., null pointer detector, incorrect `clone()` detector
-  - Your bug detectors
+<div align="center">
+  <img src="fig/overview.png" width="900" alt="CrySentry Architecture">
+  <p><strong>Figure 2: Overview of CrySentry.</strong></p>
+</div>
 
-Tai-e is developed in Java, and it can run on major operating systems including Windows, Linux, and macOS.
 
-As a courtesy to the developers, we expect that you **please [cite](CITATION.bib) the paper** from ISSTA 2023 describing the Tai-e framework in your research work:
 
-Tian Tan and Yue Li. 2023.
-**Tai-e: A Developer-Friendly Static Analysis Framework for Java by Harnessing the Good Designs of Classics.**
-In Proceedings of the 32nd ACM SIGSOFT International Symposium on Software Testing and Analysis (ISSTA '23), July 17–21, 2023, Seattle, WA, USA ([pdf](https://cs.nju.edu.cn/tiantan/papers/issta2023.pdf), [bibtex](CITATION.bib)).
+CrySentry models:
 
-## How to Obtain Runnable Jar of Tai-e?
-The simplest way is to download it from [GitHub Releases](https://github.com/pascal-lab/Tai-e/releases).
+- crypto-related information as **sources**,
+- security-sensitive crypto APIs as **sinks**,
+- and tracks the propagation of crypto information through Tai-e pointer analysis and taint analysis.
+- For the collected crypto-related taint flows, CrySentry applies configurable misuse detectors to determine whether the flows indicate potential security risks or vulnerabilities (e.g., insecure crypto information in security-sensitive API calls).
 
-Alternatively, you might build the latest Tai-e yourself from the source code. This can be simply accomplished via Gradle (be sure that Java 17 (or higher version) is available on your system).
-You just need to run command `gradlew fatJar`, and then the runnable jar will be generated in `tai-e/build/`, which includes Tai-e and all its dependencies.
+The current implementation supports multiple classes of crypto API misuse detection, including:
 
-## How to Include Tai-e in Your Project?
-Tai-e is designed as a standalone tool, but you also have the option to include it in your project as a dependency.
-It is available on Maven repositories, allowing you to easily integrate it into your Java projects using build tools such as Gradle and Maven.
-We maintain both stable and latest versions of Tai-e, and here are the corresponding coordinates in Gradle and Maven script formats:
+- insecure algorithms,
+- predictable cryptographic sources,
+- invalid iteration counts or key sizes,
+- insecure methods,
+- missing security checks,
+- and combined misuse patterns.
 
-### Stable Version
-For Gradle:
+Users can flexibly configure crypto sources, crypto sinks, propagation rules, and misuse detection rules, allowing CrySentry to be adapted to different APIs, frameworks, and security policies.
 
-```kotlin
-dependencies {
-    implementation("net.pascal-lab:tai-e:0.2.2")
-}
-```
+---
 
-For Maven:
+## Usage
 
-```xml
+TODO
 
-<dependencies>
-    <dependency>
-        <groupId>net.pascal-lab</groupId>
-        <artifactId>tai-e</artifactId>
-        <version>0.2.2</version>
-    </dependency>
-</dependencies>
-```
+---
 
-### Latest Version
+## Repository layout
 
-For Gradle:
+TODO
 
-```kotlin
-repositories {
-    mavenCentral()
-    maven { url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/") }
-}
 
-dependencies {
-    implementation("net.pascal-lab:tai-e:0.5.1-SNAPSHOT")
-}
-```
+---
 
-For Maven:
 
-```xml
-<repositories>
-    <repository>
-        <id>snapshots</id>
-        <name>Sonatype snapshot server</name>
-        <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
-    </repository>
-</repositories>
+## License
 
-<dependencies>
-    <dependency>
-        <groupId>net.pascal-lab</groupId>
-        <artifactId>tai-e</artifactId>
-        <version>0.5.1-SNAPSHOT</version>
-    </dependency>
-</dependencies>
-```
+This project will be released under an open-source license.
 
-You can use these coordinates in your Gradle or Maven scripts to include the desired version of Tai-e in your project.
 
-## Documentation
-
-### Reference Documentation
-
-We have provided detailed information of Tai-e in the [Reference Documentation](https://tai-e.pascal-lab.net/docs/current/reference/en/index.html), which covers various aspects such as [Setup in IntelliJ IDEA](https://tai-e.pascal-lab.net/docs/current/reference/en/setup-in-intellij-idea.html), [Command-Line Options](https://tai-e.pascal-lab.net/docs/current/reference/en/command-line-options.html), and [Development of New Analysis](https://tai-e.pascal-lab.net/docs/current/reference/en/develop-new-analysis.html).
-
-Please note that the reference documentation mentioned above pertains to *the latest version* of Tai-e.
-If you need documentation for a specific stable version, please refer to the [Documentation Index](https://tai-e.pascal-lab.net/docs).
-Additionally, the documentation is included within the repository and maintained alongside the source code.
-You can access the reference documentation for a particular version of Tai-e (in AsciiDoc format) by exploring the [docs/en](docs/en) directory, starting from [index.adoc](docs/en/index.adoc).
-This allows you to access version-specific documentation for Tai-e.
-
-In addition to the reference
-documentation, [Javadocs](https://tai-e.pascal-lab.net/docs/current/api/index.html) for Tai-e are
-also available as a useful reference resource.
-
-### Changelog
-Since we are actively developing and updating Tai-e, we record the notable changes we made, especially the new features and breaking changes, in [CHANGELOG](CHANGELOG.md).
-If you find something wrong after updating Tai-e, maybe you could check [CHANGELOG](CHANGELOG.md) for useful information.
-
-## Tai-e Assignments
-In addition, we have developed an [educational version of Tai-e](https://tai-e.pascal-lab.net/en/intro/overview.html) where eight programming assignments are carefully designed for systematically training learners to implement various static analysis techniques to analyze real Java programs.
-The educational version shares a large amount of code with Tai-e, thus doing the assignments would be a good way to get familiar with Tai-e.

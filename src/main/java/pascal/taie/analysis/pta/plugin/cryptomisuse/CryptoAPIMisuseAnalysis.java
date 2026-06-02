@@ -116,6 +116,10 @@ public class CryptoAPIMisuseAnalysis implements Plugin {
 
     private int stringCount = 0;
 
+    private List<String> constTypes = Arrays.asList("char[]", "java.lang.String", "java.lang.String[]",
+            "char", "byte", "byte[]", "int", "long", "short", "int[]", "long[]",
+            "short[]", "java.lang.StringBuilder", "java.lang.StringBuffer");
+
     public static void addAppClass(Set<String> appClass) {
         appClassesInString.addAll(appClass);
     }
@@ -215,6 +219,16 @@ public class CryptoAPIMisuseAnalysis implements Plugin {
         JMethod jMethod = csMethod.getMethod();
         Context ctx = csMethod.getContext();
         if (jMethod.getDeclaringClass().isApplication()) {
+            if (jMethod.isPublic()) {
+                jMethod.getIR().getParams().forEach(var -> {
+                    if (constTypes.contains(var.getType().getName())) {
+                        Obj predictableObj = manager.makePredictableCryptoObj(var.getType());
+                        solver.addVarPointsTo(csMethod.getContext(), var, emptyContext,
+                                predictableObj);
+                    }
+                });
+            }
+
             jMethod.getIR().getStmts().forEach(stmt -> {
                 if (stmt instanceof AssignLiteral assignStmt) {
                     Var lhs = assignStmt.getLValue();
@@ -266,7 +280,11 @@ public class CryptoAPIMisuseAnalysis implements Plugin {
 
     @Override
     public void onNewPointsToSet(CSVar csVar, PointsToSet pts) {
-        resourceRetrieverModel.onNewPointsToSet(csVar, pts);
+        try {
+            resourceRetrieverModel.onNewPointsToSet(csVar, pts);
+        } catch (Exception ex) {
+            logger.info("Retriever model has an invocation exception");
+        }
         Var var = csVar.getVar();
         cryptoVarPropagates.get(var).forEach(p -> {
             Var to = p.first();
@@ -498,6 +516,8 @@ public class CryptoAPIMisuseAnalysis implements Plugin {
         ClassHierarchy classHierarchy = World.get().getClassHierarchy();
         PointerAnalysisResult result = solver.getResult();
 
+        logger.info("Dumping crypto misuse reports to {}", CryptoAPIMisuseAnalysis.outputFile());
+
         List<Issue> issueList = new ArrayList<>();
         addSimpleIssue(issueList, result);
         addCompositeIssue(issueList, result);
@@ -514,7 +534,6 @@ public class CryptoAPIMisuseAnalysis implements Plugin {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         result.storeResult(getClass().getName(), consistIssueList);
     }
 }

@@ -57,14 +57,23 @@ public class PatternMatchRuleJudge implements RuleJudge {
     }
 
     public Issue report(CryptoObjInformation coi, Var var, Invoke callSite) {
-        Stmt stmt = coi.allocation();
-        PatternMatchIssue issue = new PatternMatchIssue("Pattern Match",
-                "The pattern is not matched for the API",
-                coi.allocation().toString(),
-                coi.sourceMethod().toString(),
-                callSite, var.getName(),
-                coi.constantValue().toString(), patternMatchRule.method().toString(),
-                callSite.getContainer().getSubsignature().toString());
-        return issue;
+        if(patternMatchRule.pattern().contains("http")) {
+            PatternMatchIssue issue = new PatternMatchIssue("Pattern Match",
+                    "This HTTP link is vulnerable to interception; use HTTPS to secure the transmission of information.",
+                    coi.allocation().toString(),
+                    coi.sourceMethod().toString(),
+                    callSite, var.getName(),
+                    coi.constantValue().toString(), patternMatchRule.method().toString());
+            return issue;
+        }
+        else{
+            PatternMatchIssue issue = new PatternMatchIssue("Pattern Match",
+                    "The algorithm used in this API call, is insecure and may lead to data leakage due to vulnerability to attacks.",
+                    coi.allocation().toString(),
+                    coi.sourceMethod().toString(),
+                    callSite, var.getName(),
+                    coi.constantValue().toString(), patternMatchRule.method().toString());
+            return issue;
+        }
     }
 }

@@ -23,6 +23,7 @@ public enum Benchmark {
     TOMEE("tomee",APACHEAPI_BENCHMARKS_DIR + "/tomee"),
 
     WICKET("wicket", APACHEAPI_BENCHMARKS_DIR + "/wicket"),
+
     ALIYUN("aliyun-oss-java-sdk", CRYPTO_BENCHMARKS_DIR + "/aliyun-oss-java-sdk"),
 
     FASTBOOT("fast-boot-weixin", CRYPTO_BENCHMARKS_DIR + "/fast-boot-weixin"),

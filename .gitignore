@@ -7,11 +7,9 @@ build/
 cache/
 out/
 output/
-<<<<<<< HEAD
 
 # MacOS hidden file
 .DS_Store
 /crypto-benchmarks/
+/crypto-benchmarks1/
 /crypto-output/
-=======
->>>>>>> upstream/master

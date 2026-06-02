@@ -22,11 +22,12 @@
 
 package pascal.taie;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pascal.taie.analysis.AnalysisManager;
-import pascal.taie.analysis.graph.callgraph.CallGraph;
-import pascal.taie.analysis.pta.PointerAnalysisResult;
+import pascal.taie.analysis.pta.plugin.cryptomisuse.CryptoAPIMisuseAnalysis;
+import pascal.taie.analysis.pta.plugin.cryptomisuse.resource.ResourceRetrieverModel;
 import pascal.taie.config.AnalysisConfig;
 import pascal.taie.config.AnalysisPlanner;
 import pascal.taie.config.ConfigManager;
@@ -37,13 +38,22 @@ import pascal.taie.config.Plan;
 import pascal.taie.config.PlanConfig;
 import pascal.taie.config.Scope;
 import pascal.taie.frontend.cache.CachedWorldBuilder;
+import pascal.taie.util.DirectoryTraverser;
 import pascal.taie.util.Timer;
+import pascal.taie.util.ZipUtils;
 import pascal.taie.util.collection.Lists;
+import pascal.taie.util.collection.Sets;
+import pascal.taie.util.collection.Tuple;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -52,6 +62,7 @@ public class Main {
     public static void main(String... args) {
         Timer.runAndCount(() -> {
             Options options = processArgs(args);
+            initializeCrypto(options.getAppClassPath());
             LoggerConfigs.setOutput(options.getOutputDir());
             Plan plan = processConfigs(options);
             if (plan.analyses().isEmpty()) {
@@ -153,5 +164,67 @@ public class Main {
 
     private static void executePlan(Plan plan) {
         new AnalysisManager(plan).execute();
+    }
+
+    private static void
+    initializeCrypto(List<String> appClassPaths) {
+        List<String> archivePaths = new ArrayList<>();
+        appClassPaths.forEach(acp -> {
+            if (Path.of(acp).toFile().isDirectory()) {
+                try {
+                    archivePaths.addAll(findAllJars(acp));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                archivePaths.add(acp);
+            }
+        });
+        Tuple<String, List<String>, List<String>> result;
+
+        List<Path> tempDirectories = new ArrayList<>(archivePaths.size());
+        String classPath = "";
+        List<String> classes = new ArrayList<>();
+        List<String> dependencyJarPaths = new ArrayList<>();
+        for (String archivePath : archivePaths) {
+            System.out.println("archivePath:" + archivePath);
+            try {
+                // uncompress archive file at temp directory
+                // get classpath, classes
+                if (archivePath.contains("original-classes.jar") || archivePath.contains("test.jar")) {
+                    Path tempDirectory = Files.createTempDirectory(
+                            Path.of(archivePath).toFile().getName()
+                                    .replace(".jar", "-")
+                                    .replace(".war", "-")
+                    );
+                    ZipUtils.uncompressZipFile(archivePath, tempDirectory.toString());
+                    tempDirectories.add(tempDirectory);
+                    classPath = tempDirectory.toString();
+                    System.out.println(classPath);
+                    classes = DirectoryTraverser.listClasses(classPath);
+                    CryptoAPIMisuseAnalysis.addAppClass(Sets.newSet(classes));
+                    ResourceRetrieverModel.setClasspath(tempDirectory);
+                } else {
+                    dependencyJarPaths.add(archivePath);
+                }
+            } catch (IOException e) {
+                logger.error("", e);
+                throw new RuntimeException(e);
+            }
+        }
+        // delete temp directories
+        Runtime.getRuntime().addShutdownHook(new Thread(() ->
+                tempDirectories.stream().map(Path::toFile).forEach(FileUtils::deleteQuietly)));
+
+    }
+    public static List<String> findAllJars(String dir) throws IOException {
+        try (var stream = Files.walk(Path.of(dir))) {
+            return stream
+                    .filter(Files::isRegularFile)
+                    .filter(path -> path.toString().endsWith(".jar"))
+                    .map(Path::toAbsolutePath)
+                    .map(Path::toString)
+                    .collect(Collectors.toList());
+        }
     }
 }
