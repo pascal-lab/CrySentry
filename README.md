@@ -32,7 +32,7 @@ Existing crypto API misuse detectors still suffer from false negatives caused by
 On four widely used crypto API misuse benchmark suites: MUBench, OWASP Benchmark, Apache Crypto API Bench, and Crypto API Bench, **CrySentry** achieves consistently better soundness (**97.5% average recall**) and precision (**96.7% precision**), compared with state-of-the-art tools including CryptoGuard, CrySL, and FindSecBugs.
 
 <div align="center">
-  <img src=evaluation.png" width="430" height="330" alt="Evaluation Overview">
+  <img src="evaluation.png" width="430" height="330" alt="Evaluation Overview">
   <p><strong>Figure 1: Evaluation overview comparing CrySentry with existing tools.</strong></p>
 </div>
 
@@ -44,7 +44,7 @@ On four widely used crypto API misuse benchmark suites: MUBench, OWASP Benchmark
 A major and challenging class of crypto API misuse involves insecure crypto information being used in security-sensitive API calls. CrySentry is designed to detect such misuses using Tai-e’s whole-program pointer analysis and taint analysis framework.
 
 <div align="center">
-  <img src="fig/overview.png" width="900" alt="CrySentry Architecture">
+  <img src="overview.png" width="900" alt="CrySentry Architecture">
   <p><strong>Figure 2: Overview of CrySentry.</strong></p>
 </div>
 
