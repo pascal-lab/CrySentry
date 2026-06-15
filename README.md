@@ -7,12 +7,12 @@ CrySentry is a static analysis tool for detecting **Java cryptographic API misus
 ## Features
 The current implementation supports multiple classes of crypto API misuse detection, including:
 
-- weak or deprecated cryptographic algorithms,
-- predictable or non-cryptographically secure sources,
-- invalid iteration counts or key sizes,
-- unsafe or forbidden cryptographic API usages,
-- missing or insufficient security checks,
-- and composite misuse patterns involving multiple conditions.
+- **weak or deprecated cryptographic algorithms**,
+- **predictable or non-cryptographically secure sources**,
+- **invalid iteration counts or key sizes**,
+- **unsafe or forbidden cryptographic API usages**,
+- **missing or insufficient security checks**,
+- **and composite misuse patterns involving multiple conditions**.
 
 ---
 
@@ -32,7 +32,7 @@ Existing crypto API misuse detectors still suffer from false negatives caused by
 On four widely used crypto API misuse benchmark suites: MUBench, OWASP Benchmark, Apache Crypto API Bench, and Crypto API Bench, **CrySentry** achieves consistently better soundness (**97.5% average recall**) and precision (**96.7% precision**), compared with state-of-the-art tools including CryptoGuard, CrySL, and FindSecBugs.
 
 <div align="center">
-  <img src="evaluation.png" width="430" height="330" alt="Evaluation Overview">
+  <img src="evaluation.png" width="500" height="400" alt="Evaluation Overview">
   <p><strong>Figure 1: Evaluation overview comparing CrySentry with existing tools.</strong></p>
 </div>
 
