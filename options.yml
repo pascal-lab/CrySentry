@@ -1,0 +1,42 @@
+optionsFile: null
+printHelp: false
+classPath: []
+appClassPath:
+  - crypto-benchmarks/activemq/original-classes.jar
+
+
+mainClass: null
+inputClasses: []
+javaVersion: 8
+prependJVM: true
+allowPhantom: true
+worldBuilderClass: pascal.taie.frontend.newfrontend.AsmWorldBuilder
+outputDir: output/activemq
+preBuildIR: false
+worldCacheMode: false
+scope: REACHABLE
+nativeModel: true
+planFile: null
+
+analyses:
+  pta: |
+    plugins:[pascal.taie.analysis.pta.plugin.cryptomisuse.reachableplugin.CryptoReachablePlugin];
+    crypto-output:crypto-output/activemq.json;
+    crypto-config:src/main/resources/crypto-config.yml;
+    implicit-entries:false;
+    only-app:false;
+    merge-string-builders:true;
+    cs:1-call;
+    advanced:hashmap;
+    propagate-types:[reference,byte,char,int];
+
+
+
+onlyGenPlan: false
+keepResult:
+  - $KEEP-ALL
+jreDir: null
+extractAllClasses: false
+noAppendJava: false
+useNonParallelCWAlgorithm: false
+frontendOptions: {}

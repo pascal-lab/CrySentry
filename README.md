@@ -71,33 +71,33 @@ CrySentry is executed through Tai-e’s standard entry point. To run the analysi
 java -jar tai-e.jar --options-file /path/to/options.yml
 ```
 
-A minimal example of the options file is shown below:
+A minimal example of the options file is shown below (the demo `options.yml` file can be found in the root directory of the project; when running from a JAR, the paths in this file should be replaced with absolute paths):
 
 ```yaml
 optionsFile: null
 printHelp: false
 classPath: []
 appClassPath:
-  - /crypto-benchmarks/activemq/original-classes.jar
+  - /.../crypto-benchmarks/activemq/original-classes.jar
 
 mainClass: null
 inputClasses: []
 javaVersion: 8
-prependJVM: false
+prependJVM: true
 allowPhantom: true
 worldBuilderClass: pascal.taie.frontend.newfrontend.AsmWorldBuilder
-outputDir: output/activemq
+outputDir: /.../output/activemq
 preBuildIR: false
 worldCacheMode: false
-scope: APP
+scope: REACHABLE
 nativeModel: true
 planFile: null
 
 analyses:
   pta: |
     plugins:[pascal.taie.analysis.pta.plugin.cryptomisuse.reachableplugin.CryptoReachablePlugin];
-    crypto-output:crypto-output/activemq.json;
-    crypto-config:src/test/resources/pta/cryptomisuse/crypto-config.yml;
+    crypto-output:/.../crypto-output/activemq.json;
+    crypto-config:/.../src/main/resources/crypto-config.yml;
     implicit-entries:false;
     only-app:false;
     merge-string-builders:true;
@@ -116,6 +116,33 @@ noAppendJava: false
 useNonParallelCWAlgorithm: false
 frontendOptions: {}
 ```
+
+### 0. Configure the JDK version
+
+很好，这里需要做两件事：**澄清依赖关系 + 去掉“非必要条件的误导性表达” + 让说明更精确可复现**。我帮你重写成一版更干净的 README 版本：
+
+---
+
+### 0. Configure the JDK version
+
+CrySentry supports two modes for selecting the JDK used during analysis, following the JDK configuration mechanism of Tai-e.
+
+If `prependJVM` is set to `true`, CrySentry uses the JDK that executes `tai-e.jar` as the analysis JDK.
+
+If `prependJVM` is set to `false`, the analysis JDK must be specified via `javaVersion` (default is `6`). In this mode, CrySentry requires that a `java-benchmarks` directory exists in the current working directory. This is the only requirement for enabling this mode.
+
+A common way to prepare the working directory is:
+
+1. Clone the CrySentry repository.
+2. Initialize and fetch submodules
+   (this will obtain the `java-benchmarks` directory.):
+
+```bash
+git submodule update --init --recursive
+```
+
+
+3. Ensure `tai-e.jar` is placed in the same directory as `java-benchmarks`.
 
 
 ### 1. Configure the target application
@@ -148,7 +175,7 @@ A typical setup is:
 
 ```yaml
 appClassPath:
-  - /crypto-benchmarks/activemq/original-classes.jar
+  - /.../crypto-benchmarks/activemq/original-classes.jar
 classPath:
   - /path/to/dependency1.jar
   - /path/to/dependency2.jar
@@ -172,8 +199,8 @@ Other Tai-e plugins can also be used in the same way.
 CrySentry is configured inside the `pta` analysis section. The following options are the key ones:
 
 ```yaml
-crypto-output:crypto-output/activemq.json;
-crypto-config:src/test/resources/pta/cryptomisuse/crypto-config.yml;
+crypto-output:/.../crypto-output/activemq.json;
+crypto-config:/.../src/main/resources/crypto-config.yml;
 ```
 
 * `crypto-output` specifies where CrySentry writes the detection results.
