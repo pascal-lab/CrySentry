@@ -1,0 +1,106 @@
+patternMatchRules:
+  - { method: "<javax.crypto.Cipher: javax.crypto.Cipher getInstance(java.lang.String)>", index: 0, pattern: "(.)*DES(.)*|(.)*DESede(.)*|AES|AES/ECB(.)*|AES\\/CBC\\/NoPadding|(.)*DESedeWrap(.)*|(.)*RC2(.)*|(.)*RC4(.)*|(.)*RC5(.)*|(.)*Blowfish(.)*|(.)*IDEA(.)*|PBEWithMD5AndDES|PBEWithMD5AndTripleDES|PBEWithSHA1AndDESede|PBEWithSHA1AndRC2_40|ARCFOUR|RSA/ECB/OAEPWITHSHA-1ANDMGF1PADDING|RSA/ECB/PKCS1Padding" }
+  - { method: "<javax.crypto.Cipher: javax.crypto.Cipher getInstance(java.lang.String,java.lang.String)>", index: 0, pattern: "(.)*DES(.)*|(.)*DESede(.)*|AES|AES/ECB(.)*|AES\\/CBC\\/NoPadding|(.)*DESedeWrap(.)*|(.)*RC2(.)*|(.)*RC4(.)*|(.)*RC5(.)*|(.)*Blowfish(.)*|(.)*IDEA(.)*|PBEWithMD5AndDES|PBEWithMD5AndTripleDES|PBEWithSHA1AndDESede|PBEWithSHA1AndRC2_40|ARCFOUR" }
+  - { method: "<javax.crypto.Cipher: javax.crypto.Cipher getInstance(java.lang.String,java.security.Provider)>", index: 0, pattern: "(.)*DES(.)*|(.)*DESede(.)*|AES|AES/ECB(.)*|AES\\/CBC\\/NoPadding|(.)*DESedeWrap(.)*|(.)*RC2(.)*|(.)*RC4(.)*|(.)*RC5(.)*|(.)*Blowfish(.)*|(.)*IDEA(.)*|PBEWithMD5AndDES|PBEWithMD5AndTripleDES|PBEWithSHA1AndDESede|PBEWithSHA1AndRC2_40|ARCFOUR" }
+  - { method: "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String)>", index: 0, pattern: "MD2|(.)*MD5|(.)*MD4|(.)*SHA-1|SHA1|SHA" }
+  - { method: "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String,java.lang.String)>", index: 0, pattern: "MD2|(.)*MD5|(.)*MD4|(.)*SHA-1|SHA1|SHA" }
+  - { method: "<java.security.MessageDigest: java.security.MessageDigest getInstance(java.lang.String,java.security.Provider)>", index: 0, pattern: "MD2|(.)*MD5|(.)*MD4|(.)*SHA-1|SHA1|SHA" }
+  - { method: "<javax.crypto.Mac: javax.crypto.Mac getInstance(java.lang.String)>", index: 0, pattern: "HmacMD5|HmacSHA1" }
+  - { method: "<javax.crypto.Mac: javax.crypto.Mac getInstance(java.lang.String,java.lang.String)>", index: 0, pattern: "HmacMD5|HmacSHA1" }
+  - { method: "<javax.crypto.Mac: javax.crypto.Mac getInstance(java.lang.String,java.security.Provider)>", index: 0, pattern: "HmacMD5|HmacSHA1" }
+  - { method: "<javax.crypto.SecretKeyFactory: javax.crypto.SecretKeyFactory getInstance(java.lang.String)>", index: 0, pattern: "PBEWithMD5AndDES|DES|DESede|Blowfish" }
+  - { method: "<javax.crypto.SecretKeyFactory: javax.crypto.SecretKeyFactory getInstance(java.lang.String,java.lang.String)>", index: 0, pattern: "PBEWithMD5AndDES|DES|DESede|Blowfish" }
+  - { method: "<javax.crypto.SecretKeyFactory: javax.crypto.SecretKeyFactory getInstance(java.lang.String,java.security.Provider)>", index: 0, pattern: "PBEWithMD5AndDES|DES|DESede|Blowfish" }
+  - { method: "<javax.crypto.spec.SecretKeySpec: void <init>(byte[],java.lang.String)>", index: 1, pattern: "Blowfish|DES|ARCFOUR|DESede|HmacSHA1" }
+  - { method: "<javax.crypto.KeyGenerator: javax.crypto.KeyGenerator getInstance(java.lang.String)>", index: 0, pattern: "HmacSHA1|DES||HmacMD5|Blowfish|DESede" }
+  - { method: "<java.security.Signature: java.security.Signature getInstance(java.lang.String)>", index: 0, pattern: "MD5withRSA|SHA1withRSA" }
+  - { method: "<java.security.Signature: java.security.Signature getInstance(java.lang.String,java.lang.String)>", index: 0, pattern: "MD5withRSA|SHA1withRSA" }
+  - { method: "<java.security.Signature: java.security.Signature getInstance(java.lang.String,java.security.Provider)>", index: 0, pattern: "MD5withRSA|SHA1withRSA" }
+  - { method: "<java.net.URL: void <init>(java.lang.String)>", index: 0, pattern: "^(?!http://$)http://(.*)$" }
+  - { method: "<java.net.URL: void <init>(java.lang.String,java.lang.String,java.lang.String)>", index: 0, pattern: "^(?!http://$)http://(.*)$" }
+  - { method: "<java.net.URL: void <init>(java.lang.String,java.lang.String,int,java.lang.String)>", index: 0, pattern: "^(?!http://$)http://(.*)$" }
+  - { method: "<okhttp3.Request$Builder: okhttp3.Request$Builder url(java.lang.String)>", index: 0, pattern: "^(?!http://$)http://(.*)$" }
+  - { method: "<retrofit2.Retrofit$Builder: retrofit2.Retrofit$Builder baseUrl(java.lang.String)>", index: 0, pattern: "^(?!http://$)http://(.*)$" }
+
+influencingFactorRules:
+  - { method: "void checkClientTrusted(java.security.cert.X509Certificate[],java.lang.String)", index: exception, factor: null, type: use }
+  - { method: "void checkServerTrusted(java.security.cert.X509Certificate[],java.lang.String)", index: exception, factor: null, type: use }
+  - { method: "java.security.cert.X509Certificate[] getAcceptedIssuers()", index: return, factor: "getAcceptedIssuers()", type: def }
+  - { method: "boolean verify(java.lang.String,javax.net.ssl.SSLSession)", index: return, factor: 1, type: def }
+
+coOccurrenceRules:
+  - { method: "<javax.net.ssl.SSLSocketFactory: javax.net.SocketFactory getDefault()>", index: "['createSocket', '!<javax.net.ssl.HostnameVerifier: boolean verify(java.lang.String,javax.net.ssl.SSLSession)>']" }
+  - { method: "<javax.net.ssl.SSLContext: javax.net.ssl.SSLSocketFactory getSocketFactory()>", index: "[createSocket, !<javax.net.ssl.HostnameVerifier: boolean verify(java.lang.String,javax.net.ssl.SSLSession)>]" }
+  - { method: "<javax.net.ssl.HttpsURLConnection: javax.net.ssl.SSLSocketFactory getDefaultSSLSocketFactory()>", index: "[createSocket, !<javax.net.ssl.HostnameVerifier: boolean verify(java.lang.String,javax.net.ssl.SSLSession)>]" }
+
+predictableSourceRules:
+  - { method: "<javax.crypto.spec.SecretKeySpec: void <init>(byte[],java.lang.String)>", index: 0 }
+  - { method: "<javax.crypto.spec.SecretKeySpec: void <init>(byte[],int,int,java.lang.String)>", index: 0 }
+  - { method: "<javax.crypto.spec.IvParameterSpec: void <init>(byte[])>", index: 0 }
+  - { method: "<javax.crypto.spec.IvParameterSpec: void <init>(byte[],int,int)>", index: 0 }
+  - { method: "<java.security.KeyStore: void load(java.io.InputStream,char[])>", index: 1 }
+  - { method: "<javax.crypto.spec.PBEParameterSpec: void <init>(byte[],int)>", index: 0 }
+  - { method: "<javax.crypto.spec.PBEParameterSpec: void <init>(byte[],int,java.security.spec.AlgorithmParameterSpec)>", index: 0 }
+  #  - { method: "<javax.net.ssl.DefaultSSLSocketFactory: java.net.Socket createSocket(java.lang.String,int)>", index: base }
+  - { method: "<java.security.SecureRandom: void setSeed(byte[])>", index: 0 }
+  - { method: "<java.security.SecureRandom: void <init>(byte[])>", index: 0 }
+  - { method: "<javax.crypto.spec.PBEKeySpec: void <init>(char[],byte[],int,int)>", index: 0 }
+  - { method: "<javax.crypto.spec.PBEKeySpec: void <init>(char[],byte[],int,int)>", index: 1 }
+
+cryptoSources:
+  - { method: "<java.util.Base64$Decoder: byte[] decode(java.lang.String)>", type: "byte[]", index: result }
+  - { method: "<java.util.Random: void nextBytes(byte[])>", type: "byte[]", index: 0 }
+#  - { method: "<javax.net.ssl.SSLSocketFactory: javax.net.SocketFactory getDefault()>", type: "javax.net.ssl.SSLSocketFactory", index: result }
+#  - { method: "<org.owasp.esapi.reference.DefaultEncoder: java.lang.String encodeForBase64(byte[],boolean)>", type: "java.lang.String", index: result }
+#  - { method: "<java.security.MessageDigest: byte[] digest()>", type: "byte[]", index: result }
+
+numberSizeRules:
+  - { method: "<javax.crypto.spec.PBEParameterSpec: void <init>(byte[],int)>", index: 1, min: 1000, max: 50000 }
+  - { method: "<javax.crypto.spec.PBEKeySpec: void <init>(char[],byte[],int)>", index: 2, min: 1000, max: 50000 }
+  - { method: "<javax.crypto.spec.PBEKeySpec: void <init>(char[],byte[],int,int)>", index: 2, min: 1000, max: 50000 }
+
+forbiddenMethodRules:
+  - { method: "<javax.crypto.spec.PBEKeySpec: void <init>(char[])>" }
+
+cryptoObjPropagate:
+  - { method: "<java.lang.String: java.lang.String concat(java.lang.String)>", from: base, to: result, type: "java.lang.String" }
+  - { method: "<java.lang.String: java.lang.String concat(java.lang.String)>", from: 0, to: result, type: "java.lang.String" }
+  - { method: "<java.lang.String: char[] toCharArray()>", from: base, to: result, type: "char[]" }
+  - { method: "<java.lang.String: void <init>(char[])>", from: 0, to: base, type: "java.lang.String" }
+  - { method: "<java.lang.String: java.lang.String valueOf(char[])>", from: 0, to: result, type: "java.lang.String" }
+  - { method: "<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)>", from: 0, to: base, type: "java.lang.StringBuffer" }
+  - { method: "<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.Object)>", from: 0, to: base, type: "java.lang.StringBuffer" }
+  - { method: "<java.lang.StringBuffer: java.lang.String toString()>", from: base, to: result, type: "java.lang.String" }
+  - { method: "<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>", from: 0, to: base, type: "java.lang.StringBuilder" }
+  - { method: "<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>", from: base, to: result, type: "java.lang.StringBuilder" }
+  - { method: "<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>", from: 0, to: base, type: "java.lang.StringBuilder" }
+  - { method: "<java.lang.StringBuilder: java.lang.String toString()>", from: base, to: result, type: "java.lang.String" }
+  - { method: "<java.util.Arrays: byte[] copyOf(byte[],int)>", from: 0, to: result, type: "byte[]" }
+  - { method: "<java.lang.String: byte[] getBytes()>", from: base, to: result, type: "byte[]" }
+  - { method: "<java.lang.String: byte[] getBytes(java.lang.String)>", from: base, to: result, type: "byte[]" }
+  - { method: "<java.lang.String: byte[] getBytes(java.nio.charset.Charset)>", from: base, to: result, type: "byte[]" }
+  - { method: "<java.util.Arrays: byte[] copyOfRange(byte[],int,int)>", from: 0, to: result, type: "byte[]" }
+  - { method: "<java.lang.Integer: int parseInt(java.lang.String)>", from: 0, to: result, type: "int" }
+  - { method: "<java.lang.Object: java.lang.String toString()>", from: base, to: result, type: "java.lang.String" }
+  - { method: "<java.lang.Byte: byte parseByte(java.lang.String)>", from: 0, to: result, type: "byte" }
+  - { method: "<java.lang.Byte: void <init>(byte)>", from: 0, to: base, type: "java.lang.Byte" }
+  - { method: "<java.lang.Byte: byte byteValue()>", from: base, to: result, type: "byte" }
+  - { method: "<java.lang.String: java.lang.String valueOf(char[])>", from: 0, to: result, type: "java.lang.String" }
+
+compositeRules:
+  - compositeRule:
+      fromSource:
+        method: "<java.security.KeyPairGenerator: java.security.KeyPairGenerator getInstance(java.lang.String)>"
+        index: result
+        type: "java.security.KeyPairGenerator"
+      toSources:
+        - { method: "<java.security.KeyPairGenerator: java.security.KeyPairGenerator getInstance(java.lang.String)>", index: result, ruleType: "PatternMatch", ruleIndex: 0, pattern: "RSA" }
+        - { method: "<java.security.KeyPairGenerator: void initialize(int)>", index: base, ruleType: "NumberSize", ruleIndex: 0, min: 2048, max: 10000 }
+  - compositeRule:
+      fromSource:
+        method: "<java.security.KeyPairGenerator: java.security.KeyPairGenerator getInstance(java.lang.String)>"
+        index: result
+        type: "java.security.KeyPairGenerator"
+      toSources:
+        - { method: "<java.security.KeyPairGenerator: java.security.KeyPairGenerator getInstance(java.lang.String)>", index: result, ruleType: "PatternMatch", ruleIndex: 0, pattern: "ECC" }
+        - { method: "<java.security.KeyPairGenerator: void initialize(int)>", index: base, ruleType: "NumberSize", ruleIndex: 0, min: 224, max: 10000 }

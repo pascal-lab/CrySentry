@@ -153,7 +153,7 @@ public class AsmIRBuilder {
 
     private List<Pair<List<BytecodeBlock>, BytecodeBlock>> tryAndHandlerBlocks;
 
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(AsmIRBuilder.class);
 
     private static final StackItem TOP = new StackItem(Top.Top, null);
 

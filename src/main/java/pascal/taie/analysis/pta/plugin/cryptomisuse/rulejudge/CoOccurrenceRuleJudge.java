@@ -27,7 +27,7 @@ public class CoOccurrenceRuleJudge implements RuleJudge {
 
     public CoOccurrenceRuleJudge(CoOccurrenceRule coOccurrenceRule) {
         this.coOccurrenceRule = coOccurrenceRule;
-        this.intraprocedualDefUse = new IntraprocedualDefUse("src/test/resources/pta/cryptomisuse/defuse-config.yml");
+        this.intraprocedualDefUse = new IntraprocedualDefUse("defuse-config.yml");
     }
 
     public Issue judge(PointerAnalysisResult result, Invoke callSite) {

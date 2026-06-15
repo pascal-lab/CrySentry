@@ -1,0 +1,20 @@
+- description: intraprocedural control-flow graph
+  analysisClass: pascal.taie.analysis.graph.cfg.CFGBuilder
+  id: cfg
+  requires: [ throw(exception=explicit|all) ]
+  options:
+    exception: null # | null | all (includes implicit and explicit exceptions)
+    dump: false # dump control-flow graph
+
+- description: reaching definition analysis
+  analysisClass: pascal.taie.analysis.dataflow.analysis.ReachingDefinition
+  id: reach-def
+  requires: [ cfg ]
+
+- description: def-use analysis
+  analysisClass: pascal.taie.analysis.defuse.DefUseAnalysis
+  id: def-use
+  requires: [ reach-def ]
+  options:
+    compute-defs: true # whether compute definitions of variables
+    compute-uses: true # whether compute uses of variables

@@ -32,17 +32,15 @@ public class IntraprocedualDefUse {
     ReachingDefinition reachingDefinition;
     DefUseAnalysis defUseAnalysis;
 
-    public IntraprocedualDefUse(String filePath) {
-        try {
-            InputStream inputStream = new FileInputStream(filePath);
-            List<AnalysisConfig> analysisConfigs = parseConfigs(inputStream);
-            ConfigManager manager = new ConfigManager(analysisConfigs);
-            cfgBuilder = new CFGBuilder(manager.getConfig(CFGBuilder.ID));
-            reachingDefinition = new ReachingDefinition(manager.getConfig(ReachingDefinition.ID));
-            defUseAnalysis = new DefUseAnalysis(manager.getConfig(DefUseAnalysis.ID));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public IntraprocedualDefUse(String fileName) {
+        InputStream inputStream = IntraprocedualDefUse.class
+                .getClassLoader()
+                .getResourceAsStream(fileName);
+        List<AnalysisConfig> analysisConfigs = parseConfigs(inputStream);
+        ConfigManager manager = new ConfigManager(analysisConfigs);
+        cfgBuilder = new CFGBuilder(manager.getConfig(CFGBuilder.ID));
+        reachingDefinition = new ReachingDefinition(manager.getConfig(ReachingDefinition.ID));
+        defUseAnalysis = new DefUseAnalysis(manager.getConfig(DefUseAnalysis.ID));
     }
 
     public void analyze(IR ir) {

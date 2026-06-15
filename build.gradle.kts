@@ -46,16 +46,18 @@ application {
     mainClass.set("pascal.taie.Main")
 }
 
-task("fatJar", type = Jar::class) {
+tasks.register<Jar>("fatJar", Jar::class) {
     group = "build"
-    description = "Creates a single jar file including Tai-e and all dependencies"
+    description = "Creates a legacy single jar file including Tai-e and all dependencies"
     manifest {
         attributes["Main-Class"] = "pascal.taie.Main"
     }
-    archiveBaseName.set("tai-e-all")
+    archiveBaseName.set("${projectArtifactId}-all")
     from(
-        configurations.runtimeClasspath.get().map {
-            if (it.isDirectory) it else zipTree(it)
+        configurations.runtimeClasspath.get().map { file ->
+            if (file.isDirectory) file else zipTree(file).matching {
+                exclude("META-INF/**/*.RSA")
+            }
         }
     )
     from("COPYING", "COPYING.LESSER")
@@ -67,6 +69,7 @@ task("fatJar", type = Jar::class) {
 tasks.jar {
     from("COPYING", "COPYING.LESSER")
     destinationDirectory.set(rootProject.layout.buildDirectory)
+    archiveBaseName.set(projectArtifactId)
 }
 
 tasks.withType<Test> {
