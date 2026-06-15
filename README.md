@@ -119,12 +119,6 @@ frontendOptions: {}
 
 ### 0. Configure the JDK version
 
-很好，这里需要做两件事：**澄清依赖关系 + 去掉“非必要条件的误导性表达” + 让说明更精确可复现**。我帮你重写成一版更干净的 README 版本：
-
----
-
-### 0. Configure the JDK version
-
 CrySentry supports two modes for selecting the JDK used during analysis, following the JDK configuration mechanism of Tai-e.
 
 If `prependJVM` is set to `true`, CrySentry uses the JDK that executes `tai-e.jar` as the analysis JDK.
