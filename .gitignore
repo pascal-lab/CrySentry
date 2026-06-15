@@ -1,5 +1,6 @@
 # macOS hidden file
 .DS_Store
+._.DS_Store
 .gradle/
 .idea/
 bin/
@@ -7,9 +8,6 @@ build/
 cache/
 out/
 output/
-
-# MacOS hidden file
-.DS_Store
-/crypto-benchmarks/
-/crypto-benchmarks1/
 /crypto-output/
+
+
